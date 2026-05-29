@@ -7,7 +7,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { useWallet } from "@/components/WalletContext";
 import { useTheme } from "@/hooks/useTheme";
 import { Link } from '@/i18n/routing';
-import { getAdmin } from "@/lib/contractClient";
+import { useAdmin } from "@/hooks/useAdmin";
 import { formatAddress } from "@/lib/formatAddress";
 import LanguageSwitcher from "./LanguageSwitcher";
 import NotificationBell from "./NotificationBell";
@@ -20,7 +20,7 @@ export default function Navbar() {
   const { publicKey, isWalletConnected, connectWallet, disconnectWallet, isLoading } = useWallet();
   const { theme, toggleTheme } = useTheme();
   const t = useTranslations('Common');
-  const [adminAddress, setAdminAddress] = useState<string | null>(null);
+  const { admin: adminAddress } = useAdmin();
 
   const { campaigns } = useCampaigns();
   const pendingCount = useMemo(() => {
@@ -30,10 +30,6 @@ export default function Navbar() {
   const networkPassphrase = process.env.NEXT_PUBLIC_NETWORK_PASSPHRASE || '';
   const isTestnet = networkPassphrase.includes('Test SDF');
   const isMainnet = networkPassphrase.includes('Public Global');
-
-  useEffect(() => {
-    getAdmin().then(setAdminAddress).catch(() => { });
-  }, []);
 
   useEffect(() => {
     if (!menuOpen) {
