@@ -452,7 +452,8 @@ export default function AdminDashboard() {
           <div className="flex items-center justify-between px-2">
             <h2 className="text-2xl font-bold flex items-center gap-3">
               {t("verificationQueue")}
-              <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
+              {/* zinc-500 on zinc-800 is ~3.2:1; zinc-300 on zinc-800 is ~8.5:1 — meets WCAG AA */}
+              <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-300">
                 {pendingCampaigns.length}
               </span>
             </h2>
@@ -479,7 +480,7 @@ export default function AdminDashboard() {
                 <p className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-1">
                   {t("noPending")}
                 </p>
-                <p className="text-sm text-zinc-500">{t("subtitle")}</p>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">{t("subtitle")}</p>
               </div>
             ) : (
               <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -682,7 +683,7 @@ export default function AdminDashboard() {
               <ShieldAlert size={20} className="text-amber-500" />
               {t("responsibility")}
             </div>
-            <p className="text-xs text-zinc-500 leading-relaxed italic">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed italic">
               {t("responsibilityText")}
             </p>
           </div>
@@ -695,7 +696,7 @@ export default function AdminDashboard() {
           <h2 className="text-2xl font-bold flex items-center gap-3">
             <Flag size={22} className="text-red-500" />
             Abuse Reports
-            <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
+            <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-300">
               {reports.filter((r) => r.status === 'pending').length} pending
             </span>
           </h2>
@@ -714,13 +715,11 @@ export default function AdminDashboard() {
                   }`}>
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
+                      {/* red-400 on red-900/30 is ~2.6:1; red-300 gives ~4.8:1 — meets WCAG AA */}
+                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300">
                         {REPORT_REASON_LABELS[report.reason]}
                       </span>
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded ${report.status === 'pending'
-                        ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
-                        : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'
-                        }`}>
+
                         {report.status}
                       </span>
                     </div>
@@ -817,7 +816,7 @@ function StatsCard({
       <div className="size-12 rounded-2xl bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform" aria-hidden="true">
         {icon}
       </div>
-      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 dark:text-zinc-300 mb-2 block">
+      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 dark:text-zinc-200 mb-2 block">
         {label}
       </span>
       <span className="text-2xl font-black text-zinc-900 dark:text-zinc-50">{value}</span>
